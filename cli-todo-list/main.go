@@ -4,10 +4,14 @@ import "fmt"
 
 func main() {
 
-	var myTodos Todos
+	todos := Todos{}
 
-	myTodos.add("do home work")
+	todos.add("Learn Go")
+	todos.add("Build a CLI Todo List")
+	todos.add("Test the application")
 
-	fmt.Println(myTodos)
+	fmt.Println("Current Todos:", todos)
 
+	todos.delete(0)
+	fmt.Println(todos)
 }

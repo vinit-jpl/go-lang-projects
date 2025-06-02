@@ -1,6 +1,10 @@
 package main
 
-import "time"
+import (
+	"errors"
+	"fmt"
+	"time"
+)
 
 type Todo struct {
 	Title       string
@@ -20,4 +24,28 @@ func (todos *Todos) add(title string) {
 	}
 
 	*todos = append(*todos, todo)
+}
+
+func (todos *Todos) validateIndex(index int) error {
+	if index < 0 || index >= len(*todos) {
+		err := errors.New("index out of range")
+		fmt.Println(err)
+		return err
+	}
+
+	return nil
+
+}
+
+func (todos *Todos) delete(index int) error {
+	t := *todos
+	if err := todos.validateIndex(index); err != nil {
+		return err
+	}
+
+	// Remove the todo at the specified index by slicing the slice.
+	*todos = append(t[:index], t[index+1:]...) // Remove the todo at the specified index by combining the slices before and after the index.
+	fmt.Printf("Todo at index %d deleted successfully.\n", index)
+
+	return nil
 }
