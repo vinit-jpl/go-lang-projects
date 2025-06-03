@@ -1,0 +1,20 @@
+[
+    {
+        "Title": "Learn Go",
+        "Completed": true,
+        "CreatedAt": "2025-06-03T14:49:03.9195091+05:30",
+        "CompletedAt": "2025-06-03T14:49:03.9195091+05:30"
+    },
+    {
+        "Title": "Build a CLI Todo List",
+        "Completed": false,
+        "CreatedAt": "2025-06-03T14:49:03.9195091+05:30",
+        "CompletedAt": null
+    },
+    {
+        "Title": "Test the application",
+        "Completed": false,
+        "CreatedAt": "2025-06-03T14:49:03.9195091+05:30",
+        "CompletedAt": null
+    }
+]
