@@ -1,7 +1,5 @@
 package main
 
-import "fmt"
-
 func main() {
 
 	todos := Todos{}
@@ -10,8 +8,7 @@ func main() {
 	todos.add("Build a CLI Todo List")
 	todos.add("Test the application")
 
-	fmt.Println("Current Todos:", todos)
+	todos.toggle(0)
+	todos.print()
 
-	todos.delete(0)
-	fmt.Println(todos)
 }
