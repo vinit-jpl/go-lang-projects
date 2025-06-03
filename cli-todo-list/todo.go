@@ -19,6 +19,11 @@ type Todo struct {
 
 type Todos []Todo
 
+// syntax for attaching a method on the struct
+// func (receiverName ReceiverType) MethodName(parameters) returnType {
+//     // method body
+// }
+
 func (todos *Todos) add(title string) {
 	todo := Todo{
 		Title:       title,
