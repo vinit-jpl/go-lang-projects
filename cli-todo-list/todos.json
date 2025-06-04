@@ -1,20 +1,14 @@
 [
     {
-        "Title": "Learn Go",
-        "Completed": true,
-        "CreatedAt": "2025-06-03T14:49:03.9195091+05:30",
-        "CompletedAt": "2025-06-03T14:49:03.9195091+05:30"
-    },
-    {
-        "Title": "Successfully built the todo cli list",
-        "Completed": true,
-        "CreatedAt": "2025-06-03T14:49:03.9195091+05:30",
-        "CompletedAt": "2025-06-04T10:37:20.5666232+05:30"
-    },
-    {
-        "Title": "Test the application",
+        "Title": "go for a walk after lunch",
         "Completed": false,
-        "CreatedAt": "2025-06-03T14:49:03.9195091+05:30",
+        "CreatedAt": "2025-06-04T11:06:17.8109255+05:30",
+        "CompletedAt": null
+    },
+    {
+        "Title": "go through the cli to do list code",
+        "Completed": false,
+        "CreatedAt": "2025-06-04T11:43:26.6787379+05:30",
         "CompletedAt": null
     }
 ]

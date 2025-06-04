@@ -5,7 +5,7 @@ import (
 	"os"
 )
 
-type Storage[T any] struct {
+type Storage[T any] struct { // T can be of any type, in our case T is of type Todos
 	Filename string
 }
 
@@ -13,6 +13,13 @@ func NewStorage[T any](filename string) *Storage[T] {
 	return &Storage[T]{Filename: filename}
 }
 
+/*
+// below is a method called save that belongs to a pointer to a generic storage struct
+
+	func(receiverName ReceiverType) methodName(params) returnType {
+		 method body
+	}
+*/
 func (s *Storage[T]) Save(data T) error {
 	fileData, err := json.MarshalIndent(data, "", "    ")
 

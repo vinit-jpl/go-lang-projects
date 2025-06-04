@@ -17,7 +17,7 @@ type Todo struct {
 	CompletedAt *time.Time
 }
 
-type Todos []Todo
+type Todos []Todo // Create a new type called Todos, which is a slice of Todo structs.
 
 // syntax for attaching a method on the struct
 // func (receiverName ReceiverType) MethodName(parameters) returnType {
