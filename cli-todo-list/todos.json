@@ -6,10 +6,10 @@
         "CompletedAt": "2025-06-03T14:49:03.9195091+05:30"
     },
     {
-        "Title": "Build a CLI Todo List",
-        "Completed": false,
+        "Title": "Successfully built the todo cli list",
+        "Completed": true,
         "CreatedAt": "2025-06-03T14:49:03.9195091+05:30",
-        "CompletedAt": null
+        "CompletedAt": "2025-06-04T10:37:20.5666232+05:30"
     },
     {
         "Title": "Test the application",

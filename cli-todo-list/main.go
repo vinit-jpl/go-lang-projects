@@ -10,7 +10,9 @@ func main() {
 	// todos.add("Test the application")
 
 	// todos.toggle(0)
-	todos.print()
+	// todos.print()
+	cmdFlags := NewCmdFlags()
+	cmdFlags.Execute(&todos)
 	storage.Save(todos)
 
 }
