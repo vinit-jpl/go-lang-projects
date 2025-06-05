@@ -9,6 +9,7 @@ type Storage[T any] struct { // T can be of any type, in our case T is of type T
 	Filename string
 }
 
+// initialize storage
 func NewStorage[T any](filename string) *Storage[T] {
 	return &Storage[T]{Filename: filename}
 }
@@ -22,20 +23,17 @@ func NewStorage[T any](filename string) *Storage[T] {
 */
 func (s *Storage[T]) Save(data T) error {
 	fileData, err := json.MarshalIndent(data, "", "    ")
-
 	if err != nil {
 		return err
 	}
 
-	return os.WriteFile(s.Filename, fileData, 0644)
+	return os.WriteFile(s.Filename, fileData, 0644) // todos.json is created in this step. If it's already present it writes the data to the file
 }
 
 func (s *Storage[T]) Load(data *T) error {
 	fileData, err := os.ReadFile(s.Filename)
-
 	if err != nil {
 		return err
 	}
-
 	return json.Unmarshal(fileData, data)
 }

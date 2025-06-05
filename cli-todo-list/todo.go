@@ -19,7 +19,7 @@ type Todo struct {
 
 type Todos []Todo // Create a new type called Todos, which is a slice of Todo structs.
 
-// syntax for attaching a method on the struct
+// syntax for attaching a method on the slice
 // func (receiverName ReceiverType) MethodName(parameters) returnType {
 //     // method body
 // }

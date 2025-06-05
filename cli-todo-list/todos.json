@@ -1,14 +1,8 @@
 [
     {
-        "Title": "go for a walk after lunch",
+        "Title": "go for walk in evening",
         "Completed": false,
-        "CreatedAt": "2025-06-04T11:06:17.8109255+05:30",
-        "CompletedAt": null
-    },
-    {
-        "Title": "go through the cli to do list code",
-        "Completed": false,
-        "CreatedAt": "2025-06-04T11:43:26.6787379+05:30",
+        "CreatedAt": "2025-06-05T15:45:12.3723869+05:30",
         "CompletedAt": null
     }
 ]

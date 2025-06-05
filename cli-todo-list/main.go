@@ -2,7 +2,7 @@ package main
 
 func main() {
 
-	todos := Todos{}
+	todos := Todos{} // initializing the Todos slice
 	storage := NewStorage[Todos]("todos.json")
 	storage.Load(&todos)
 	// todos.add("Learn Go")
