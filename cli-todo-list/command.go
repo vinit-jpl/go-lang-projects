@@ -23,7 +23,7 @@ func NewCmdFlags() *CmdFlags {
 	flag.StringVar(&cf.Edit, "edit", "", "edit a todo by index and specify the new title, id:new_title")
 	flag.IntVar(&cf.Del, "del", -1, "specify a todo index to delete")
 	flag.IntVar(&cf.Toggle, "toggle", -1, "specify a todo index to toggle")
-	flag.BoolVar(&cf.List, "list", false, "Add a new todo, specify title")
+	flag.BoolVar(&cf.List, "list", false, "list all todos")
 
 	flag.Parse()
 
