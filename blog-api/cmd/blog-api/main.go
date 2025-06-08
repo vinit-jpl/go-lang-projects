@@ -7,14 +7,9 @@ import (
 	"os"
 
 	"github.com/joho/godotenv"
+	"github.com/vinit-jpl/blog-api/internal/database"
 )
 
-func test() {
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, "Hello, World!")
-	})
-
-}
 func main() {
 
 	// load the enviromnent variables from the .env file
@@ -25,7 +20,8 @@ func main() {
 
 	}
 
-	test()
+	database.InitDB()
+
 	port := os.Getenv("PORT")
 	// fmt.Println("port from .env file:", port)
 
