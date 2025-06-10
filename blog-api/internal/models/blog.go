@@ -13,3 +13,7 @@ type BlogPost struct {
 	Author    string             `bson:"author" json:"author"`
 	CreatedAt time.Time          `bson:"created_at" json:"created_at"`
 }
+
+func NewObjectID() primitive.ObjectID {
+	return primitive.NewObjectID()
+}

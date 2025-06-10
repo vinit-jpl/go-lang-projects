@@ -3,10 +3,16 @@ package main
 // Importing necessary packages
 import (
 	"context" // For context.TODO()
-	"log"     // For logging errors and information
+	"fmt"
+	"log" // For logging errors and information
+	"net/http"
+	"os"
 
 	"github.com/joho/godotenv"                      // Loads environment variables from a .env file
 	"github.com/vinit-jpl/blog-api/internal/config" // Custom package for configuration and MongoDB connection
+	"github.com/vinit-jpl/blog-api/internal/controllers"
+	"github.com/vinit-jpl/blog-api/internal/repository"
+	"github.com/vinit-jpl/blog-api/internal/services"
 )
 
 func main() {
@@ -25,5 +31,20 @@ func main() {
 
 	log.Println("Connected to MongoDB:", mongoInstance.DB.Name())
 
-	// Start your server here...
+	repo := repository.NewBlogRepository(mongoInstance.DB)
+	service := services.NewBlogService(repo)
+	postController := controllers.NewPostController(service)
+
+	http.HandleFunc("POST /post", postController.Create)
+
+	// Start  server here...
+	port := os.Getenv("PORT")
+	// fmt.Println("port", port)
+
+	fmt.Println("Server started on port,", port)
+	err = http.ListenAndServe(":"+port, nil)
+	if err != nil {
+		log.Fatal("failded to start the server: ", err)
+	}
+
 }
