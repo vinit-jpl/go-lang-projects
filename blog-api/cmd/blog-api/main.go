@@ -40,6 +40,8 @@ func main() {
 
 	router := http.NewServeMux()
 	routes.RegisterPostRoutes(router, postController)
+	routes.RegisterViewPostRoutes(router, postController)
+	routes.RegisterViewAllPostsRoutes(router, postController)
 
 	// Start  server here...
 	port := os.Getenv("PORT")

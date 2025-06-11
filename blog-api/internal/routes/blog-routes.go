@@ -7,5 +7,13 @@ import (
 )
 
 func RegisterPostRoutes(router *http.ServeMux, postController *controllers.PostController) {
-	router.HandleFunc("/post", postController.Create)
+	router.HandleFunc("/createPost", postController.Create)
+}
+
+func RegisterViewPostRoutes(router *http.ServeMux, postController *controllers.PostController) {
+	router.HandleFunc("/viewPost", postController.ViewPostById)
+}
+
+func RegisterViewAllPostsRoutes(router *http.ServeMux, postController *controllers.PostController) {
+	router.HandleFunc("/viewAllPost", postController.GetAllBlogPosts)
 }

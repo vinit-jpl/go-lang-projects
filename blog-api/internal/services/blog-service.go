@@ -2,6 +2,7 @@ package services
 
 import (
 	"context"
+	"fmt"
 	"time"
 
 	"github.com/vinit-jpl/blog-api/internal/models"
@@ -27,4 +28,24 @@ func (s *BlogService) CreateBlogPost(ctx context.Context, post *models.BlogPost)
 	post.CreatedAt = time.Now()
 
 	return s.Repo.CreateBlog(ctx, post)
+}
+
+func (s *BlogService) GetBlogById(ctx context.Context, id primitive.ObjectID) (*models.BlogPost, error) {
+	blogPost, err := s.Repo.GetBlogById(ctx, id)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return blogPost, nil
+}
+
+func (s *BlogService) GetAllBlogPosts(ctx context.Context) ([]*models.BlogPost, error) {
+	blogPosts, err := s.Repo.GetAllBlogs(ctx)
+	fmt.Println("blogPosts:", blogPosts)
+	if err != nil {
+		return nil, err
+	}
+
+	return blogPosts, nil
 }
