@@ -72,3 +72,14 @@ func (r *BlogRepository) GetAllBlogs(ctx context.Context) ([]*models.BlogPost, e
 	return posts, nil
 
 }
+
+func (r *BlogRepository) UpdateBlog(ctx context.Context, id primitive.ObjectID, updateData bson.M) error {
+	filter := bson.M{"_id": id}
+
+	update := bson.M{"$set": updateData}
+
+	_, err := r.Collection.UpdateOne(ctx, filter, update)
+
+	return err
+
+}

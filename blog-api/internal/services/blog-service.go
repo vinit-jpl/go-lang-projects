@@ -7,6 +7,7 @@ import (
 
 	"github.com/vinit-jpl/blog-api/internal/models"
 	"github.com/vinit-jpl/blog-api/internal/repository"
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
@@ -48,4 +49,9 @@ func (s *BlogService) GetAllBlogPosts(ctx context.Context) ([]*models.BlogPost, 
 	}
 
 	return blogPosts, nil
+}
+
+func (s *BlogService) UpdateBlog(ctx context.Context, id primitive.ObjectID, updateData bson.M) error {
+	return s.Repo.UpdateBlog(ctx, id, updateData)
+
 }

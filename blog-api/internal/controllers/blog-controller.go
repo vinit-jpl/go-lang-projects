@@ -8,6 +8,7 @@ import (
 
 	"github.com/vinit-jpl/blog-api/internal/models"
 	"github.com/vinit-jpl/blog-api/internal/services"
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
@@ -96,5 +97,69 @@ func (pc *PostController) GetAllBlogPosts(w http.ResponseWriter, r *http.Request
 	w.Header().Set("Content-Type", "application/json")
 
 	json.NewEncoder(w).Encode(posts)
+
+}
+
+func (pc *PostController) UpdateBlogPost(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPut && r.Method != http.MethodPatch {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+	}
+
+	idStr := r.URL.Query().Get("id")
+	if idStr == "" {
+		http.Error(w, "Missing ID", http.StatusBadRequest)
+		return
+	}
+
+	objectID, err := primitive.ObjectIDFromHex(idStr)
+	if err != nil {
+		http.Error(w, "Invalid ID", http.StatusBadRequest)
+		return
+	}
+
+	// Creates a generic map to hold JSON key-value pairs.
+
+	// string is the key (like "title"), and interface{} is the value (which could be any type — string, int, etc.).
+	var body map[string]interface{}
+
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		http.Error(w, "Invalid json body", http.StatusBadRequest)
+	}
+
+	updateFields := bson.M{} // Creates an empty MongoDB update map (type alias of map[string]interface{}).
+
+	/*
+		value := body["title"]
+		title, ok := value.(string)
+
+		if ok {
+			updateFields["title"] = title
+		}
+	*/
+	if title, ok := body["Title"].(string); ok {
+		updateFields["Title"] = title
+	}
+
+	if content, ok := body["Content"].(string); ok {
+		updateFields["Content"] = content
+	}
+
+	if author, ok := body["Author"].(string); ok {
+		updateFields["Author"] = author
+	}
+
+	if len(updateFields) == 0 {
+		http.Error(w, "No valid fields to update", http.StatusBadRequest)
+		return
+	}
+
+	err = pc.Service.UpdateBlog(r.Context(), objectID, updateFields)
+	if err != nil {
+		http.Error(w, "Failed to update blog post", http.StatusInternalServerError)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte("Post updated successfully"))
 
 }
