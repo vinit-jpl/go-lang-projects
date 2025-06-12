@@ -43,6 +43,7 @@ func main() {
 	routes.RegisterViewPostRoutes(router, postController)
 	routes.RegisterViewAllPostsRoutes(router, postController)
 	routes.RegisterUpdatePostRoutes(router, postController)
+	routes.RegisterDeleteRoutes(router, postController)
 
 	// Start  server here...
 	port := os.Getenv("PORT")

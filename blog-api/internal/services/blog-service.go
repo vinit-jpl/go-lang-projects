@@ -9,6 +9,7 @@ import (
 	"github.com/vinit-jpl/blog-api/internal/repository"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
+	"go.mongodb.org/mongo-driver/mongo"
 )
 
 type BlogService struct {
@@ -54,4 +55,8 @@ func (s *BlogService) GetAllBlogPosts(ctx context.Context) ([]*models.BlogPost, 
 func (s *BlogService) UpdateBlog(ctx context.Context, id primitive.ObjectID, updateData bson.M) error {
 	return s.Repo.UpdateBlog(ctx, id, updateData)
 
+}
+
+func (s *BlogService) DeleteBlog(ctx context.Context, id primitive.ObjectID) (*mongo.DeleteResult, error) {
+	return s.Repo.DeleteBlog(ctx, id)
 }

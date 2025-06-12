@@ -83,3 +83,17 @@ func (r *BlogRepository) UpdateBlog(ctx context.Context, id primitive.ObjectID, 
 	return err
 
 }
+
+// Delete post by ID
+
+func (r *BlogRepository) DeleteBlog(ctx context.Context, id primitive.ObjectID) (*mongo.DeleteResult, error) {
+	filter := bson.M{"_id": id}
+
+	result, err := r.Collection.DeleteOne(ctx, filter)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}

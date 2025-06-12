@@ -163,3 +163,37 @@ func (pc *PostController) UpdateBlogPost(w http.ResponseWriter, r *http.Request)
 	w.Write([]byte("Post updated successfully"))
 
 }
+
+// delete blog
+
+func (pc *PostController) DeleteBlogPost(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodDelete {
+		http.Error(w, "Method Not Allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	idStr := r.URL.Query().Get("id")
+	if idStr == "" {
+		http.Error(w, "Missing blog ID", http.StatusBadRequest)
+		return
+	}
+
+	objectID, err := primitive.ObjectIDFromHex(idStr)
+	if err != nil {
+		http.Error(w, "Invalid blog ID", http.StatusBadRequest)
+		return
+	}
+
+	result, err := pc.Service.DeleteBlog(r.Context(), objectID)
+	if err != nil {
+		http.Error(w, "Failed to delete blog post", http.StatusInternalServerError)
+		return
+	}
+
+	if result.DeletedCount == 0 {
+		http.Error(w, "No blog found with that ID", http.StatusNotFound)
+		return
+	}
+
+	fmt.Fprintf(w, "Successfully deleted blog post")
+}

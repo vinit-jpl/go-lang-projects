@@ -21,3 +21,7 @@ func RegisterViewAllPostsRoutes(router *http.ServeMux, postController *controlle
 func RegisterUpdatePostRoutes(router *http.ServeMux, postController *controllers.PostController) {
 	router.HandleFunc("/updatePost", postController.UpdateBlogPost)
 }
+
+func RegisterDeleteRoutes(router *http.ServeMux, postController *controllers.PostController) {
+	router.HandleFunc("/deletePost", postController.DeleteBlogPost)
+}
