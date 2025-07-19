@@ -5,7 +5,6 @@ import (
 	"log"
 	"os"
 
-	"github.com/joho/godotenv"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -16,12 +15,6 @@ type Database struct {
 
 func New() *Database {
 
-	err := godotenv.Load()
-
-	if err != nil {
-		log.Fatalf("Error loading .env file: %v", err)
-	}
-
 	dsn := fmt.Sprintf(
 		"host=%s user=%s password=%s dbname=%s port=%s sslmode=disable",
 
@@ -31,6 +24,8 @@ func New() *Database {
 		os.Getenv("POSTGRES_DB"),
 		os.Getenv("POSTGRES_PORT"),
 	)
+
+	// fmt.Println("Connecting to database with DSN:", dsn)
 
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
