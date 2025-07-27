@@ -11,5 +11,7 @@ func SetupRoutes(router *gin.Engine, db *database.Database) {
 	// Example route
 	router.GET("/ping", handlers.Pinghandler)
 
-	// You can pass db.DB (the *gorm.DB) to your handlers here
+	// routes/routes.go
+	router.POST("/shorten", handlers.ShortenURLHandler(db.DB))
+
 }
