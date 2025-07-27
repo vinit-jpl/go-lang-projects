@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"url-shortner/internal/models"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -34,6 +35,10 @@ func New() *Database {
 	}
 
 	log.Println("Database connection established successfully")
+
+	if err := db.AutoMigrate(&models.URL{}); err != nil {
+		log.Fatalf("failed to migrate database: %v", err)
+	}
 
 	myDatabase := Database{DB: db}
 
