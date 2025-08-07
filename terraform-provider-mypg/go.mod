@@ -1,6 +1,8 @@
 module terraform-provider-mypg
 
-go 1.24.2
+go 1.23.0
+
+toolchain go1.23.12
 
 require (
 	github.com/hashicorp/terraform-plugin-framework v1.15.1

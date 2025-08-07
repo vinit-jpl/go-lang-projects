@@ -9,38 +9,55 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 )
 
-// Define the provider struct
-type mypgProvider struct{}
+type postgresProvider struct{}
 
-// Metadata sets the provider type name
-func (p *mypgProvider) Metadata(_ context.Context, _ provider.MetadataRequest, resp *provider.MetadataResponse) {
+func (p *postgresProvider) Metadata(_ context.Context, _ provider.MetadataRequest, resp *provider.MetadataResponse) {
 	resp.TypeName = "mypg"
-	resp.Version = "1.0.0"
 }
 
-// GetSchema returns the provider-level schema (empty for now)
-func (p *mypgProvider) Schema(_ context.Context, _ provider.SchemaRequest, resp *provider.SchemaResponse) {
-	resp.Schema = schema.Schema{}
+func (p *postgresProvider) Schema(_ context.Context, _ provider.SchemaRequest, resp *provider.SchemaResponse) {
+	resp.Schema = schema.Schema{
+		Attributes: map[string]schema.Attribute{
+			"host": schema.StringAttribute{
+				Required:    true,
+				Description: "PostgreSQL host.",
+			},
+			"port": schema.Int64Attribute{
+				Optional:    true,
+				Description: "PostgreSQL port.",
+			},
+			"username": schema.StringAttribute{
+				Required:    true,
+				Description: "PostgreSQL username.",
+			},
+			"password": schema.StringAttribute{
+				Required:    true,
+				Sensitive:   true,
+				Description: "PostgreSQL password.",
+			},
+			"database": schema.StringAttribute{
+				Required:    true,
+				Description: "Database to connect to.",
+			},
+		},
+	}
+
 }
 
-// Configure configures the provider (no-op for now)
-func (p *mypgProvider) Configure(ctx context.Context, req provider.ConfigureRequest, resp *provider.ConfigureResponse) {
-	// No configuration for now
-}
-
-// Resources returns the list of supported resources
-func (p *mypgProvider) Resources(_ context.Context) []func() resource.Resource {
+func (p *postgresProvider) Resources(_ context.Context) []func() resource.Resource {
 	return []func() resource.Resource{
 		NewTableResource,
 	}
 }
 
-// DataSources returns the list of supported data sources
-func (p *mypgProvider) DataSources(_ context.Context) []func() datasource.DataSource {
+func (p *postgresProvider) DataSources(_ context.Context) []func() datasource.DataSource {
 	return nil
 }
 
-// New returns a new instance of the provider
+func (p *postgresProvider) Configure(ctx context.Context, req provider.ConfigureRequest, resp *provider.ConfigureResponse) {
+
+}
+
 func New() provider.Provider {
-	return &mypgProvider{}
+	return &postgresProvider{}
 }
