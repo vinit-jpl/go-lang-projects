@@ -21,7 +21,7 @@ mkdir $env:APPDATA\terraform.d\plugins\local\local\mypg\1.0.0\windows_amd64
 Copy-Item "path/to/provider/binary" "$env:APPDATA\terraform.d\plugins\local\local\mypg\1.0.0\windows_amd64\"
 ```
 
-### Run terraform
+### 3. Run terraform
 
 ```bash
 cd examples
