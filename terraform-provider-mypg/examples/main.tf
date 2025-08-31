@@ -11,8 +11,8 @@ provider "mypg" {
   host     = "localhost"
   port     = 5432
   username = "postgres"
-  password = "your_password"
-  database = "your_db"
+  password = "postgres@123"
+  database = "postgres"
 }
 
 resource "mypg_table" "example" {
@@ -21,6 +21,6 @@ resource "mypg_table" "example" {
   host     = "localhost"
   port     = 5432
   username = "postgres"
-  password = "your_password"
-  database = "your_db"
+  password = "postgres@123"
+  database = "postgres"
 }
