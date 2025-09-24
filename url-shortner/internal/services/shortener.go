@@ -8,7 +8,7 @@ import (
 )
 
 type ShortenRequest struct {
-	URL string `json:"url" binding:"required,url"`
+	URL string `json:"url" binding:"required,startswith=http"`
 }
 
 func ShortenURL(db *gorm.DB, originalURL string) (string, error) {

@@ -18,7 +18,9 @@ func Pinghandler(c *gin.Context) {
 
 func ShortenURLHandler(db *gorm.DB) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		var req services.ShortenRequest
+		// req holds the incoming data for a URL shortening request.
+		// It uses the ShortenRequest struct defined in the services package. 
+		var req services.ShortenRequest 
 
 		if err := c.ShouldBindJSON(&req); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
@@ -36,4 +38,3 @@ func ShortenURLHandler(db *gorm.DB) gin.HandlerFunc {
 		})
 	}
 }
-
