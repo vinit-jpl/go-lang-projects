@@ -36,3 +36,4 @@ func ShortenURLHandler(db *gorm.DB) gin.HandlerFunc {
 		})
 	}
 }
+
