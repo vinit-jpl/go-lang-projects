@@ -12,7 +12,10 @@ func SetupRoutes(router *gin.Engine, db *database.Database) {
 	router.GET("/ping", handlers.Pinghandler)
 
 	// routes/routes.go
-	router.POST("/shorten", handlers.ShortenURLHandler(db.DB))
+	v1 := router.Group("/v1")
+	{
+		v1.POST("/shorten", handlers.ShortenURLHandler(db.DB))
+	}
 	router.GET("/:code", handlers.RedirectHandler(db.DB))
 
 }
