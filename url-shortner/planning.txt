@@ -1,0 +1,33 @@
+Next features to develope:
+1. Custom Short Codes
+
+    POST /shorten
+        {
+        "url": "https://github.com",
+        "custom_code": "gh"
+        }
+        → http://localhost:8080/gh
+
+2. Expiration / Time-to-Live (TTL)
+
+    Allow user to set expiration time of a url
+    Example:
+        • Expire after 30 days
+        • Or expire after 100 clicks.
+          
+
+3. Update / Delete Short Links
+
+    Add CRUD features:
+    • Update original URL of a short code
+    • Delete a short code if not needed
+
+4. Admin Dashboard / API
+
+    • Ek admin API banao jisme sari short URLs list ho.
+    • Admin stats dekh sake: top 10 most clicked links, expired links, etc.
+
+5. QR Code Generation
+
+    • Har short URL ke liye QR code generate karo.
+    • Example: /qr/:code return kare ek QR image jo scan karke open ho jaye.
