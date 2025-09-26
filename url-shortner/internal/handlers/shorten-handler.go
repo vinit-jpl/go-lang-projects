@@ -14,7 +14,7 @@ func Pinghandler(c *gin.Context) {
 	})
 }
 
-// handler for shorteningn a URL
+// handler for shortening a URL
 
 func ShortenURLHandler(db *gorm.DB) gin.HandlerFunc {
 	return func(c *gin.Context) {
