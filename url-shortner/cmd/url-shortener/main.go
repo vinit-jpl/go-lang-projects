@@ -10,9 +10,11 @@ import (
 	"time"
 	"url-shortner/internal/database"
 	"url-shortner/internal/routes"
+	"url-shortner/internal/services"
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
+	"gorm.io/gorm"
 )
 
 func loadEnv() {
@@ -21,7 +23,7 @@ func loadEnv() {
 	}
 }
 
-func setupServer() *http.Server {
+func setupServer() (*http.Server, *gorm.DB) {
 	// Get port
 	port := os.Getenv("PORT")
 	if port == "" {
@@ -36,10 +38,11 @@ func setupServer() *http.Server {
 	routes.SetupRoutes(router, db)
 
 	// Return HTTP Server
-	return &http.Server{
+	srv := &http.Server{
 		Addr:    ":" + port,
 		Handler: router,
 	}
+	return srv, db.DB
 }
 
 func startServer(srv *http.Server) {
@@ -68,9 +71,21 @@ func gracefulShutdown(srv *http.Server) {
 	log.Println("Server exited gracefully")
 }
 
+func markUrlsExpiredPeriodically(db *gorm.DB) {
+	go func() {
+		for {
+			if err := services.MarkExpiredURLs(db); err != nil {
+				log.Printf("Error marking URLs as expired: %v", err)
+			}
+			time.Sleep(1 * time.Minute) // Run every minute
+		}
+	}()
+}
+
 func main() {
 	loadEnv()
-	srv := setupServer()
+	srv, db := setupServer()
+	markUrlsExpiredPeriodically(db)
 	startServer(srv)
 	gracefulShutdown(srv)
 }
