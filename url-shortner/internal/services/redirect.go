@@ -18,5 +18,11 @@ func GetOriginalURL(db *gorm.DB, shortCode string) (string, error) {
 		return "", err
 	}
 
+	// check for expired urls in db
+
+	if url.Expired {
+		return "", errors.New("URL has expired")
+	}
+
 	return url.OriginalURL, nil
 }

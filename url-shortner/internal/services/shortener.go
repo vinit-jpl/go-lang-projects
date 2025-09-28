@@ -1,61 +1,49 @@
 package services
 
 import (
-	"fmt"
+	"url-shortner/internal/dto"
 	"url-shortner/internal/models"
-	"url-shortner/internal/utils"
 
 	"gorm.io/gorm"
 )
 
-type ShortenRequest struct {
-	URL        string `json:"url" binding:"required,startswith=http"`
-	CustomCode string `json:"custom_code"`
-}
-
-func ShortenURL(db *gorm.DB, originalURL string, customCode string) (string, error) {
+func ShortenURL(db *gorm.DB, req dto.ShortenRequest) (string, error) {
 	var shortCode string
 
-	if customCode != "" {
-		// check if custom code already exists or not
-		var exists models.URL
-		result := db.Where("short_code = ?", customCode).First(&exists)
+	// if user has provided a custom code, check its availability
 
-		if result.Error == nil {
-			// Found an existing record -> custom code is already taken
-			return "", fmt.Errorf("custom code '%s' is already in use", customCode)
+	if req.CustomCode != "" {
+		err := isCustomCodeAvailabe(db, req.CustomCode)
+
+		if err != nil {
+			return "", err
 		}
-		if result.Error != gorm.ErrRecordNotFound {
-			// Some other DB error
-			return "", result.Error
-		}
-		shortCode = customCode
+
+		shortCode = req.CustomCode
 	} else {
-		//  Generate a unique short code
-		for {
-			shortCode = utils.GenerateShortCode(6)
-			// Define a variable to hold the result (if found)
-			var exists models.URL
+		// generate a unique random code of length 6
+		code, err := generateUniqueCode(db, 6)
 
-			// Search the database for any row where short_code == generated shortCode
-			result := db.Where("short_code = ?", shortCode).First(&exists)
-
-			// Check if the record was not found
-			if result.Error == gorm.ErrRecordNotFound {
-				// The shortCode is unique — safe to use
-				break
-			}
+		if err != nil {
+			return "", err
 		}
+
+		shortCode = code
 	}
 
+	// create a new URL record in the database
 	url := models.URL{
-		OriginalURL: originalURL,
+		OriginalURL: req.URL,
 		ShortCode:   shortCode,
+		ExpiresAt:   calculateExpiry(req.ExpiresInMinutes),
+		Expired:     false,
 	}
 
+	// save the URL record to the database
 	if err := db.Create(&url).Error; err != nil {
 		return "", err
 	}
 
 	return shortCode, nil
+
 }

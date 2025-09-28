@@ -17,6 +17,11 @@ func RedirectHandler(db *gorm.DB) gin.HandlerFunc {
 		// 2. Fetch original URL from the database
 		originalURL, err := services.GetOriginalURL(db, code)
 		if err != nil {
+
+			if err.Error() == "URL has expired" {
+				c.JSON(http.StatusGone, gin.H{"error": "URL has expired"})
+				return
+			}
 			// If not found, return 404
 			c.JSON(http.StatusNotFound, gin.H{"error": "URL not found"})
 			return
